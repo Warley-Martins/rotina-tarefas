@@ -26,7 +26,7 @@ namespace Curso3_Familia
         {
             if (String.IsNullOrEmpty(descricao))
             {
-                throw new ArgumentNullException("O nome não pode ser nulo ou vazio!");
+                throw new ArgumentException("O nome não pode ser nulo ou vazio!");
             }
             this.Descricao = descricao;
             Quantidade++;
