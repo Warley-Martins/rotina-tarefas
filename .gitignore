@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/src/Curso3_Familia/bin
+/src/.vs/Curso3_Familia
+/src/Curso3_Familia/obj
+/src/Dll_Rotina_Tarefas/bin/Release/netcoreapp3.1
+/src/Dll_Rotina_Tarefas/obj
+/src/Rotina_Tarefas_Teste/bin/Release/netcoreapp3.1
+/src/Rotina_Tarefas_Teste/obj
