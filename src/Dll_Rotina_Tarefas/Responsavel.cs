@@ -34,5 +34,13 @@ namespace Curso3_Familia
         {
             this.Tarefa.Concluida = true;
         }
+        /// <summary>
+        /// Informações
+        /// </summary>
+        /// <returns>retorna uma string com informações</returns>
+        public override string ToString()
+        {
+            return $"{Nome},{Idade}";
+        }
     }
 }

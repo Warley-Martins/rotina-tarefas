@@ -104,7 +104,7 @@ namespace Curso3_Familia
         {
             foreach (var pessoa in this.Pessoas)
             {
-                pessoa.ToString().Replace(',','\n');
+                Console.WriteLine(pessoa.ToString().Replace(',', '\n'));
             }
         }
         private bool Conferir(int num)
@@ -113,6 +113,20 @@ namespace Curso3_Familia
                 if (i.Tarefa.Valor == num)
                     return false;
             return true;
+        }
+        /// <summary>
+        /// Procura uma pessoa na familia
+        /// </summary>
+        /// <param name="nome">nome da pessoa</param>
+        /// <example>O parametro: <paramref name="nome"/>, não pode ser nulo ou vazio</example>
+        /// <returns>retorna a pessoa se encontrada</returns>
+        public Pessoa ProcurarPessoa(string nome)
+        {
+            if (String.IsNullOrEmpty(nome))
+            {
+                throw new ArgumentException("O nome da pessoa não pode ser nulo ou vazio!");
+            }
+            return Pessoas.Where(x => x.Nome.Equals(nome)).FirstOrDefault();
         }
 
 

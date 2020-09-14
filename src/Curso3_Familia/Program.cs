@@ -8,26 +8,31 @@ namespace Curso3_Familia
 {
     public class Program
     {
-        //public static Casa Casa { get; private set; }
-
+        private static Casa casa;
         static void Main(string[] args)
         {
-            String p1 = null, p2 = null;
-            Console.WriteLine(Comparar(p1,p2));
-            /*
+            bool opcao = false;
+            do
+            {
+                Console.WriteLine("Digite o nome do responsavel da casa: ");
+                var nome = Console.ReadLine();
+                Console.WriteLine("Digite a idade do responsavel da casa: ");
+                var idade = int.Parse(Console.ReadLine());
+                try
+                {
+                    casa = new Casa(new Responsavel(nome, idade));
+                    opcao = true;
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Exceção lançada: {e.Message}");
+                    continue;
+                }
+
+            } while (opcao == false);
             InstaciarTeste();
-
             int opcaoSelecionada;
-            int opcaoSelecionada2;
-            int idade;
-
-            string nome;    //nome para login de alteracao de dados
-            string nomeAlterado;
-            string senha;   //senha para login de alteracao de dados
-            string hobby;
-            string opcaoPessoa;
-
-            /do
+            do
             {
                 do
                 {
@@ -36,131 +41,162 @@ namespace Curso3_Familia
 
                 switch (opcaoSelecionada)
                 {
-                    case 1:
-                        do
-                        {
-                            do
-                            {
-                                Console.WriteLine("Voce e (F) filho ou (R) responsavel? ");
-                                opcaoPessoa = Console.ReadLine();
-                            } while (opcaoPessoa != "F" && opcaoPessoa != "R" && opcaoPessoa != "f" && opcaoPessoa != "r");
-
-                            Console.WriteLine("Digite seu nome: ");
-                            nome = Console.ReadLine();
-
-                            Console.WriteLine("Digite sua idade: ");
-                            idade = int.Parse(Console.ReadLine());
-
-                            Console.WriteLine("Digite seu hobby favorito: ");
-                            hobby = Console.ReadLine();
-
-                            Console.WriteLine("Digite uma senha: ");
-                            senha = Console.ReadLine();
-
-                            Casa.adicionarPessoa(opcaoPessoa, nome, idade, hobby, senha);
-
-                            Console.WriteLine("Deseja realizar outro cadastro? (1). Sim (0). Nao");
-                            opcaoSelecionada2 = int.Parse(Console.ReadLine());
-
-                        } while (opcaoSelecionada2 == 1);
+                    case 1: // Cadastrar familia
+                        CadastrarFamilia();
                         break;
 
-                    case 2:
-                        Console.WriteLine("Resultado do cadastro: "
-                                          + Casa.CadastrarTarefa(CadastrarTarefa()));
+                    case 2: // Cadastrar Tarefa
+                        CadastrarTarefa();
                         break;
 
-                    case 3:
-
-                        Console.WriteLine("Digite seu primeiro nome: ");
-                        nome = Console.ReadLine();
-
-                        Console.WriteLine("Digite sua senha: ");
-                        senha = Console.ReadLine();
-
-                        if (Casa.VerificarPessoa(nome, senha) == true)
-                        {
-                            for (int i = 0; i < 4; i++)
-                            {
-
-                                Console.WriteLine("O que deseja alterar:\n" +
-                                                 "(1). Nome Visivel\n" +
-                                                 "(2). Hobby\n" +
-                                                 "(0). Sair\n" +
-                                                 "Opcao: ");
-                                opcaoSelecionada2 = int.Parse(Console.ReadLine());
-                                if (opcaoSelecionada2 == 0)
-                                    break;
-                                switch (opcaoSelecionada2)
-                                {
-                                    case 1:
-                                        Console.WriteLine("Digite o novo nome: ");
-                                        nomeAlterado = Console.ReadLine();
-                                        Casa.AlterarDados(nome, nomeAlterado, 1);
-                                        break;
-
-                                    case 2:
-                                        Console.WriteLine("Digite o novo Hobby: ");
-                                        hobby = Console.ReadLine();
-                                        Casa.AlterarDados(nome, hobby, 2);
-                                        break;
-                                }
-
-                            }
-                        }
-                        else
-                            Console.WriteLine("\nNome ou senha invalida!");
+                    case 3: // Alterar dados cadastrados
+                        AlterarDados();
                         break;
 
-                    case 4:
-                        Casa.RealizarSorteio();
+                    case 4: // Realizar Sorteio
+                        casa.RealizarSorteio();
                         break;
-                    case 5:
-                        Casa.PrintarLista();
-                        break;
-
-                    case 6:
-                        Console.WriteLine("Digite seu nome: ");
-                        nome = Console.ReadLine();
-
-                        if (Casa.ConcluirTarefa(nome) == true)
-                            Console.WriteLine("Concluido");
-                        else
-                            Console.WriteLine("Nome invalido");
-
+                    case 5: // Printar tarefas
+                        casa.PrintarLista();
                         break;
 
-                    case 7:
-                        Casa.PrintarFamilia();
+                    case 6: // Concluir tarefa
+                        ConcluirTarefa();
+                        break;
+
+                    case 7: // Printar familia
+                        casa.PrintarFamilia();
                         break;
                     case 0:
                         return;
                 }
             } while (true);
-            */
+
         }
 
-        /*private static void InstaciarTeste()
+        private static void ConcluirTarefa()
         {
-            Casa.adicionarPessoa(new Filhos("Joao", 12, "321", "correr"));
-            Casa.adicionarPessoa(new Filhos("Maria", 10, "654", "jogar"));
-            Casa.adicionarPessoa(new Responsavel("Danielle", 39, "456", "Passear"));
-            Casa.adicionarPessoa(new Responsavel("Vinicius", 37, "123", "Jogar Futebol"));
-
-            Casa.adicionarTarefa(new Tarefa("Banheiro", 1));
-            Casa.adicionarTarefa(new Tarefa("Cozinha", 2));
-            Casa.adicionarTarefa(new Tarefa("Quartos", 3));
-            Casa.adicionarTarefa(new Tarefa("Passar pano", 4));
+            Console.WriteLine("Digite seu nome: ");
+            var nome = Console.ReadLine();
+            Pessoa p = casa.ProcurarPessoa(nome);
+            if(p == null)
+            {
+                Console.WriteLine("\nNome invalido");
+                return;
+            }
+            p.Tarefa.Concluida = true;
         }
-        
-        public static string CadastrarTarefa()
+
+        private static void AlterarDados()
+        {
+            Console.WriteLine("Digite seu primeiro nome: ");
+            var nome = Console.ReadLine();
+            Pessoa p;
+            int opcaoSelecionada;
+            try
+            {
+                p = casa.ProcurarPessoa(nome);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Exceção lançada: {e.Message}");
+                return;
+            }
+            Console.WriteLine("O que deseja alterar:\n" +
+                             "(1). Nome Visivel\n" +
+                             "(2). Idade\n" +
+                             "(0). Sair\n" +
+                             "Opcao: ");
+            opcaoSelecionada = int.Parse(Console.ReadLine());
+            switch (opcaoSelecionada)
+            {
+                case 1:
+                    Console.WriteLine("Digite o novo nome: ");
+                    p.Nome = Console.ReadLine();
+                    break;
+
+                case 2:
+                    Console.WriteLine("Digite a nova idade: ");
+                    p.Idade = int.Parse(Console.ReadLine());
+                    break;
+            }
+        }
+
+
+        private static void CadastrarFamilia()
+        {
+            int opcaoSelecionada;
+            do
+            {
+                string opcaoPessoa;
+                do
+                {
+                    Console.WriteLine("Voce e (F) filho ou (R) responsavel? ");
+                    opcaoPessoa = Console.ReadLine();
+                    opcaoPessoa.ToUpper();
+                } while (opcaoPessoa != "F" && opcaoPessoa != "R");
+
+                Console.WriteLine("Digite seu nome: ");
+                var nome = Console.ReadLine();
+
+                Console.WriteLine("Digite sua idade: ");
+                var idade = int.Parse(Console.ReadLine());
+                if (opcaoPessoa == "R")
+                {
+                    try
+                    {
+                        casa.adicionarPessoa(new Responsavel(nome, idade));
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"Exceção lançada: {e.Message}");
+                    }
+                }
+                if (opcaoPessoa == "F")
+                {
+                    try
+                    {
+                        casa.adicionarPessoa(new Filhos(nome, idade));
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"Exceção lançada: {e.Message}");
+                    }
+                }
+                Console.WriteLine("Deseja realizar outro cadastro? (1). Sim (0). Nao");
+                opcaoSelecionada = int.Parse(Console.ReadLine());
+
+            } while (opcaoSelecionada == 1);
+        }
+
+        private static void InstaciarTeste()
+        {
+            Responsavel mae = new Responsavel("Danielle", 39);
+            Responsavel pai = new Responsavel("Vinicius", 37);
+            casa.adicionarPessoa(mae);
+            casa.adicionarPessoa(pai);
+            casa.adicionarPessoa(new Filhos("Joao", 12, mae, pai));
+            casa.adicionarPessoa(new Filhos("Maria", 10, mae, pai));
+
+            casa.adicionarTarefa(new Tarefa("Banheiro"));
+            casa.adicionarTarefa(new Tarefa("Cozinha"));
+            casa.adicionarTarefa(new Tarefa("Quartos"));
+            casa.adicionarTarefa(new Tarefa("Passar pano"));
+        }
+
+        public static void CadastrarTarefa()
         {
             string descricao;
-
             Console.WriteLine("Digite a descricao da tarefa: ");
             descricao = Console.ReadLine();
-
-            return descricao;
+            try
+            {
+                casa.adicionarTarefa(new Tarefa(descricao));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Exceção lançada: {e.Message}");
+            }
         }
 
         private static int ListarMenu()
@@ -178,10 +214,6 @@ namespace Curso3_Familia
                               "Opcao: ");
             opcao = int.Parse(Console.ReadLine());  //Erro para letra
             return opcao;
-        }*/
-        public static bool Comparar(Object o1, Object o2)
-        {
-            return o1 == o2;
         }
     }
 }

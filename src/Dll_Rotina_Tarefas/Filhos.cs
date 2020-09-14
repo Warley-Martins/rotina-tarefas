@@ -30,7 +30,6 @@ namespace Curso3_Familia
             {
                 throw new ArgumentException("A Idade não pode ser negativa!");
             }
-            Console.WriteLine(responsaveis);
             if (responsaveis[0] == null || responsaveis == null)
             {
                 throw new NullReferenceException("O filho não pode ser criado sem um, ou mais, responsaveis! ");
@@ -40,6 +39,7 @@ namespace Curso3_Familia
             {
                 this.Responsaveis.Add(item);
             }
+            this.Idade = idade;
         }
         /// <summary>
         /// Realiza a tarefa destinada
@@ -47,6 +47,14 @@ namespace Curso3_Familia
         public override void RealizarTarefa()
         {
             this.Tarefa.Concluida = true;
+        }
+        /// <summary>
+        /// Informações
+        /// </summary>
+        /// <returns>retorna uma string com informações</returns>
+        public override string ToString()
+        {
+            return $"{Nome},{Idade}";
         }
     }
 }
