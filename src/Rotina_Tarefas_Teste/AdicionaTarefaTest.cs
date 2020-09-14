@@ -21,5 +21,18 @@ namespace Rotina_Tarefas_Teste
                 () => tarefa = new Tarefa(descricao)
                 );
         }
+        [Fact]
+        public void RecebeTarefa()
+        {
+            //Arranje
+            Casa casa = new Casa(new Responsavel("fulano", 30));
+            Tarefa tarefa = new Tarefa("Arrumar");
+            bool esperado = true;
+            bool atual;
+            //Act
+            atual = casa.adicionarTarefa(tarefa);
+            //Assert
+            Assert.Equal(esperado, atual);
+        }
     }
 }

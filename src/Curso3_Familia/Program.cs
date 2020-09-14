@@ -12,6 +12,8 @@ namespace Curso3_Familia
 
         static void Main(string[] args)
         {
+            String p1 = null, p2 = null;
+            Console.WriteLine(Comparar(p1,p2));
             /*
             InstaciarTeste();
 
@@ -177,6 +179,10 @@ namespace Curso3_Familia
             opcao = int.Parse(Console.ReadLine());  //Erro para letra
             return opcao;
         }*/
+        public static bool Comparar(Object o1, Object o2)
+        {
+            return o1 == o2;
+        }
     }
 }
 
